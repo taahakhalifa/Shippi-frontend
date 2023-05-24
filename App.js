@@ -1,11 +1,13 @@
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, View } from "react-native";
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 
 export default function App() {
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <Header />
-        </SafeAreaView>
+            <Footer />
+        </View>
     );
 }
 
