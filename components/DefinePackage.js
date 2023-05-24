@@ -9,19 +9,14 @@ import {
 import { AntDesign } from "@expo/vector-icons";
 
 import React from "react";
+import ShippingType from "./ShippingType";
 
 export default function DefinePackage() {
     return (
         <SafeAreaView style={styles.screenContent}>
             <Text style={styles.mainText}>Your updating shipping label...</Text>
             <View style={styles.inputRow}>
-                <View
-                    style={[styles.inputRowText, styles.inputHalf, styles.icon]}
-                >
-                    <View style={styles.icon}></View>
-                    <View style={styles.icon}></View>
-                    <View style={styles.icon}></View>
-                </View>
+                <ShippingType />
                 <View style={styles.inputRowText}></View>
             </View>
             <Text style={styles.mainText}>Define your package...</Text>
