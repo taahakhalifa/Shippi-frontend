@@ -8,44 +8,47 @@ import DefinePackage from "./components/DefinePackage";
 import RecipientScreen from "./components/RecipientScreen";
 import ShipmentCost from "./components/ShipmentCost";
 import TotalCostScreen from "./components/TotalCostScreen";
+import { ShipmentProvider } from "./context/ShipmentContext";
 
 const Stack = createStackNavigator();
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <NavigationContainer>
-                <Header />
-                <Stack.Navigator>
-                    {/* <Stack.Screen
-                        name="Home"
-                        component={HomeScreen}
-                        options={{ headerShown: false }}
-                    /> */}
-                    {/* <Stack.Screen
+        <ShipmentProvider>
+            <View style={styles.container}>
+                <NavigationContainer>
+                    <Header />
+                    <Stack.Navigator>
+                        <Stack.Screen
+                            name="Home"
+                            component={HomeScreen}
+                            options={{ headerShown: false }}
+                        />
+                        {/* <Stack.Screen
                         name="Shipping Label"
                         component={DefinePackage}
                         options={{ headerShown: false }}
-                    /> */}
-                    {/* <Stack.Screen
+                    />
+                    <Stack.Screen
                         name="Recipient Screen"
                         component={RecipientScreen}
                         options={{ headerShown: false }}
-                    /> */}
-                    {/* <Stack.Screen
+                    />
+                    <Stack.Screen
                         name="Shipment Cost"
                         component={ShipmentCost}
                         options={{ headerShown: false }}
-                    /> */}
+                    />
                     <Stack.Screen
                         name="Total Cost Screen"
                         component={TotalCostScreen}
                         options={{ headerShown: false }}
-                    />
-                </Stack.Navigator>
-                <Footer />
-            </NavigationContainer>
-        </View>
+                    /> */}
+                    </Stack.Navigator>
+                    <Footer />
+                </NavigationContainer>
+            </View>
+        </ShipmentProvider>
     );
 }
 
