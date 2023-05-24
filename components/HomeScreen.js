@@ -9,11 +9,25 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext } from "react";
+import { useNavigation } from "@react-navigation/native";
 import HomeScreenImages from "./HomeScreenImages";
 import HomeScreenSenderDetails from "./HomeScreenSenderDetails";
+import ShipmentContext from "../context/ShipmentContext";
+import SenderContext from "../context/SenderContext";
 
 export default function HomeScreen() {
+    const navigation = useNavigation();
+    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
+    const { senderDetails } = useContext(SenderContext);
+    const handlePress = () => {
+        navigation.navigate("Shipping Label");
+        setShipmentDetails({
+            ...shipmentDetails,
+            sender_details: `${senderDetails.first_name} ${senderDetails.last_name}, ${senderDetails.city}`,
+        });
+    };
+
     return (
         <SafeAreaView style={styles.homeContent}>
             <ScrollView>
@@ -24,7 +38,10 @@ export default function HomeScreen() {
                 <Text style={styles.mainText}>Enter your details...</Text>
                 <HomeScreenSenderDetails />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.nextButton}>
+                    <TouchableOpacity
+                        style={styles.nextButton}
+                        onPress={handlePress}
+                    >
                         <Text style={styles.buttonText}>Next</Text>
                         <AntDesign name="arrowright" size={15} color="white" />
                     </TouchableOpacity>

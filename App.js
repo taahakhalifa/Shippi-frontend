@@ -26,26 +26,26 @@ export default function App() {
                                 component={HomeScreen}
                                 options={{ headerShown: false }}
                             />
-                            {/* <Stack.Screen
-                        name="Shipping Label"
-                        component={DefinePackage}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Recipient Screen"
-                        component={RecipientScreen}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Shipment Cost"
-                        component={ShipmentCost}
-                        options={{ headerShown: false }}
-                    />
-                    <Stack.Screen
-                        name="Total Cost Screen"
-                        component={TotalCostScreen}
-                        options={{ headerShown: false }}
-                    /> */}
+                            <Stack.Screen
+                                name="Shipping Label"
+                                component={DefinePackage}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="Recipient Screen"
+                                component={RecipientScreen}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="Shipment Cost"
+                                component={ShipmentCost}
+                                options={{ headerShown: false }}
+                            />
+                            <Stack.Screen
+                                name="Total Cost Screen"
+                                component={TotalCostScreen}
+                                options={{ headerShown: false }}
+                            />
                         </Stack.Navigator>
                         <Footer />
                     </NavigationContainer>
