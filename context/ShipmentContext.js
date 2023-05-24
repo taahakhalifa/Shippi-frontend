@@ -13,6 +13,8 @@ export const ShipmentProvider = ({ children }) => {
         shipment_date: "",
         cost: "",
     });
+    const [shippingRates, setShippingRates] = useState([]);
+    const [cost, setCost] = useState("");
 
     return (
         <ShipmentContext.Provider
@@ -21,6 +23,10 @@ export const ShipmentProvider = ({ children }) => {
                 setShipmentDetails,
                 pressedImage,
                 setPressedImage,
+                shippingRates,
+                setShippingRates,
+                cost,
+                setCost,
             }}
         >
             {children}

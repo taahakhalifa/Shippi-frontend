@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 
 export default function ShipmentCost() {
     const navigator = useNavigation();
-    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
+    const { shipmentDetails } = useContext(ShipmentContext);
     return (
         <SafeAreaView style={styles.screenContent}>
             <ScrollView>
