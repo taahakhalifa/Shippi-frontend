@@ -9,22 +9,24 @@ import RecipientScreen from "./components/RecipientScreen";
 import ShipmentCost from "./components/ShipmentCost";
 import TotalCostScreen from "./components/TotalCostScreen";
 import { ShipmentProvider } from "./context/ShipmentContext";
+import { SenderProvider } from "./context/SenderContext";
 
 const Stack = createStackNavigator();
 
 export default function App() {
     return (
         <ShipmentProvider>
-            <View style={styles.container}>
-                <NavigationContainer>
-                    <Header />
-                    <Stack.Navigator>
-                        <Stack.Screen
-                            name="Home"
-                            component={HomeScreen}
-                            options={{ headerShown: false }}
-                        />
-                        {/* <Stack.Screen
+            <SenderProvider>
+                <View style={styles.container}>
+                    <NavigationContainer>
+                        <Header />
+                        <Stack.Navigator>
+                            <Stack.Screen
+                                name="Home"
+                                component={HomeScreen}
+                                options={{ headerShown: false }}
+                            />
+                            {/* <Stack.Screen
                         name="Shipping Label"
                         component={DefinePackage}
                         options={{ headerShown: false }}
@@ -44,10 +46,11 @@ export default function App() {
                         component={TotalCostScreen}
                         options={{ headerShown: false }}
                     /> */}
-                    </Stack.Navigator>
-                    <Footer />
-                </NavigationContainer>
-            </View>
+                        </Stack.Navigator>
+                        <Footer />
+                    </NavigationContainer>
+                </View>
+            </SenderProvider>
         </ShipmentProvider>
     );
 }

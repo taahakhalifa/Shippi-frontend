@@ -10,9 +10,18 @@ import React, { useContext } from "react";
 import ShipmentContext from "../context/ShipmentContext";
 
 export default function HomeScreenImages() {
-    const { pressedImage, setPressedImage } = useContext(ShipmentContext);
+    const {
+        pressedImage,
+        setPressedImage,
+        shipmentDetails,
+        setShipmentDetails,
+    } = useContext(ShipmentContext);
     const handleImagePress = (image) => {
         setPressedImage(image);
+        setShipmentDetails({
+            ...shipmentDetails,
+            method: image,
+        });
     };
     return (
         <View>
