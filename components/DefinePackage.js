@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-
+import { useNavigation } from "@react-navigation/native";
 import React, { useContext } from "react";
 import ShippingType from "./ShippingType";
 import SenderDetails from "./SenderDetails";
@@ -15,6 +15,7 @@ import DatePicker from "./DatePicker";
 import ShipmentContext from "../context/ShipmentContext";
 
 export default function DefinePackage() {
+    const navigation = useNavigation();
     const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
     return (
         <SafeAreaView style={styles.screenContent}>
@@ -43,11 +44,17 @@ export default function DefinePackage() {
             <DatePicker />
 
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.backButton}>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => navigation.navigate("Home")}
+                >
                     <AntDesign name="arrowleft" size={15} color="white" />
                     <Text style={styles.backButtonText}>Back</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.nextButton}>
+                <TouchableOpacity
+                    style={styles.nextButton}
+                    onPress={() => navigation.navigate("Recipient Screen")}
+                >
                     <Text style={styles.nextButtonText}>Next</Text>
                     <AntDesign name="arrowright" size={15} color="white" />
                 </TouchableOpacity>
