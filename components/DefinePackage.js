@@ -10,6 +10,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 import React from "react";
 import ShippingType from "./ShippingType";
+import SenderDetails from "./SenderDetails";
 
 export default function DefinePackage() {
     return (
@@ -17,7 +18,7 @@ export default function DefinePackage() {
             <Text style={styles.mainText}>Your updating shipping label...</Text>
             <View style={styles.inputRow}>
                 <ShippingType />
-                <View style={styles.inputRowText}></View>
+                <SenderDetails />
             </View>
             <Text style={styles.mainText}>Define your package...</Text>
             <Text style={styles.innerText}>Weight</Text>
