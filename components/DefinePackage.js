@@ -8,11 +8,14 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-import React from "react";
+import React, { useContext } from "react";
 import ShippingType from "./ShippingType";
 import SenderDetails from "./SenderDetails";
+import DatePicker from "./DatePicker";
+import ShipmentContext from "../context/ShipmentContext";
 
 export default function DefinePackage() {
+    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
     return (
         <SafeAreaView style={styles.screenContent}>
             <Text style={styles.mainText}>Your updating shipping label...</Text>
@@ -26,11 +29,18 @@ export default function DefinePackage() {
                 <TextInput
                     placeholder="e.g. 100"
                     style={styles.inputWeightText}
+                    value={shipmentDetails.weight}
+                    onChangeText={(text) => {
+                        setShipmentDetails({
+                            ...shipmentDetails,
+                            weight: text,
+                        });
+                    }}
                 ></TextInput>
                 <Text style={styles.kgText}>Kg</Text>
             </View>
             <Text style={styles.innerText}>Preferred Shipping Date</Text>
-            <View style={styles.datePickerContainer}></View>
+            <DatePicker />
 
             <View style={styles.buttonContainer}>
                 <TouchableOpacity style={styles.backButton}>
@@ -66,30 +76,13 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 10,
     },
-    inputRowText: {
-        marginVertical: 20,
-        backgroundColor: "#E5D9CA",
-        borderRadius: 5,
-        paddingHorizontal: 20,
-        paddingVertical: 30,
-        marginBottom: 15,
-        flex: 1,
-    },
-    inputHalf: {
-        marginRight: 10,
-    },
+
     inputWeightText: {
         backgroundColor: "white",
         borderRadius: 5,
         padding: 12,
         marginBottom: 15,
         width: 300,
-    },
-    inputDateText: {
-        backgroundColor: "white",
-        borderRadius: 5,
-        padding: 12,
-        marginBottom: 15,
     },
     kgAtEnd: {
         flexDirection: "row",
@@ -133,13 +126,5 @@ const styles = StyleSheet.create({
     backButtonText: {
         color: "white",
         marginLeft: 10,
-    },
-    datePickerContainer: {
-        backgroundColor: "white",
-        borderRadius: 5,
-        marginBottom: 15,
-        padding: 20,
-        width: "100%",
-        alignItems: "flex-start",
     },
 });
