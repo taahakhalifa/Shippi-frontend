@@ -7,10 +7,15 @@ import {
     TouchableOpacity,
     ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import ShippingType from "./ShippingType";
+import SenderDetails from "./SenderDetails";
+import ShipmentContext from "../context/ShipmentContext";
+import ReceiptScreenReceiverDetails from "./ReceiptScreenReceiverDetails";
 
 export default function RecipientScreen() {
+    const { shipmentDetails } = useContext(ShipmentContext);
     return (
         <SafeAreaView style={styles.screenContent}>
             <ScrollView>
@@ -18,63 +23,17 @@ export default function RecipientScreen() {
                     Your updating shipping label...
                 </Text>
                 <View style={styles.inputRow}>
-                    <View
-                        style={[
-                            styles.inputRowText,
-                            styles.inputHalf,
-                            styles.icon,
-                        ]}
-                    >
-                        <View style={styles.icon}></View>
-                    </View>
-                    <View style={styles.inputRowText}></View>
+                    <ShippingType />
+                    <SenderDetails />
                 </View>
                 <View style={[styles.inputRowTextSingle, styles.icon]}>
-                    <Text style={styles.weightText}></Text>
+                    <Text style={styles.kgBigText}>KG</Text>
+                    <Text
+                        style={styles.weightText}
+                    >{`${shipmentDetails.weight}`}</Text>
                 </View>
                 <Text style={styles.mainText}>Enter recipient details...</Text>
-                <Text style={styles.innerText}>Recipient Details</Text>
-                <View style={styles.inputRow}>
-                    <TextInput
-                        placeholder="First Name"
-                        style={[styles.recipientRowText, styles.recipientHalf]}
-                    ></TextInput>
-                    <TextInput
-                        placeholder="Last Name"
-                        style={styles.recipientRowText}
-                    ></TextInput>
-                </View>
-                <TextInput
-                    placeholder="Email"
-                    style={styles.recipientText}
-                ></TextInput>
-                <Text style={styles.innerText}>Recipient Address</Text>
-                <View style={styles.inputRow}>
-                    <TextInput
-                        placeholder="Address Line 1"
-                        style={[styles.recipientRowText, styles.recipientHalf]}
-                    ></TextInput>
-                    <TextInput
-                        placeholder="Address Line 2"
-                        style={styles.recipientRowText}
-                    ></TextInput>
-                </View>
-                <View style={styles.inputRow}>
-                    <TextInput
-                        placeholder="City"
-                        style={[styles.recipientRowText, styles.recipientHalf]}
-                    ></TextInput>
-                    <TextInput
-                        placeholder="Country"
-                        style={styles.recipientRowText}
-                    ></TextInput>
-                </View>
-                <View style={styles.recipientRow}>
-                    <TextInput
-                        placeholder="Post code"
-                        style={styles.recipientTextHalfAlone}
-                    ></TextInput>
-                </View>
+                <ReceiptScreenReceiverDetails />
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.backButton}>
                         <AntDesign name="arrowleft" size={15} color="white" />
@@ -163,25 +122,12 @@ const styles = StyleSheet.create({
         width: 167,
         marginBottom: 10,
     },
-    recipientRowText: {
-        backgroundColor: "white",
-        borderRadius: 5,
-        padding: 12,
-        marginBottom: 15,
-        flex: 1,
+    kgBigText: {
+        fontWeight: "bold",
+        marginBottom: 10,
     },
-    recipientText: {
-        backgroundColor: "white",
-        borderRadius: 5,
-        padding: 12,
-    },
-    recipientTextHalfAlone: {
-        backgroundColor: "white",
-        borderRadius: 5,
-        padding: 12,
-        width: 167,
-    },
-    recipientHalf: {
-        marginRight: 10,
+    icon: {
+        alignItems: "center",
+        justifyContent: "center",
     },
 });
