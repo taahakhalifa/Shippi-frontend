@@ -7,6 +7,7 @@ import HomeScreen from "./components/HomeScreen";
 import DefinePackage from "./components/DefinePackage";
 import RecipientScreen from "./components/RecipientScreen";
 import ShipmentCost from "./components/ShipmentCost";
+import TotalCostScreen from "./components/TotalCostScreen";
 
 const Stack = createStackNavigator();
 
@@ -31,9 +32,14 @@ export default function App() {
                         component={RecipientScreen}
                         options={{ headerShown: false }}
                     /> */}
-                    <Stack.Screen
+                    {/* <Stack.Screen
                         name="Shipment Cost"
                         component={ShipmentCost}
+                        options={{ headerShown: false }}
+                    /> */}
+                    <Stack.Screen
+                        name="Total Cost Screen"
+                        component={TotalCostScreen}
                         options={{ headerShown: false }}
                     />
                 </Stack.Navigator>
