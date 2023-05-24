@@ -9,13 +9,24 @@ import {
 } from "react-native";
 import React, { useContext } from "react";
 import { AntDesign } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import ShippingType from "./ShippingType";
 import SenderDetails from "./SenderDetails";
 import ShipmentContext from "../context/ShipmentContext";
 import ReceiptScreenReceiverDetails from "./ReceiptScreenReceiverDetails";
+import ReceiverContext from "../context/ReceiverContext";
 
 export default function RecipientScreen() {
-    const { shipmentDetails } = useContext(ShipmentContext);
+    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
+    const { receiverDetails } = useContext(ReceiverContext);
+    const navigation = useNavigation();
+    const handlePress = () => {
+        navigation.navigate("Shipment Cost");
+        setShipmentDetails({
+            ...shipmentDetails,
+            receipt_details: `${receiverDetails.first_name} ${receiverDetails.last_name}, ${receiverDetails.city}`,
+        });
+    };
     return (
         <SafeAreaView style={styles.screenContent}>
             <ScrollView>
@@ -35,11 +46,17 @@ export default function RecipientScreen() {
                 <Text style={styles.mainText}>Enter recipient details...</Text>
                 <ReceiptScreenReceiverDetails />
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.backButton}>
+                    <TouchableOpacity
+                        style={styles.backButton}
+                        onPress={() => navigation.navigate("Shipping Label")}
+                    >
                         <AntDesign name="arrowleft" size={15} color="white" />
                         <Text style={styles.backButtonText}>Back</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.nextButton}>
+                    <TouchableOpacity
+                        style={styles.nextButton}
+                        onPress={handlePress}
+                    >
                         <Text style={styles.nextButtonText}>Next</Text>
                         <AntDesign name="arrowright" size={15} color="white" />
                     </TouchableOpacity>
