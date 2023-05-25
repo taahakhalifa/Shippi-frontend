@@ -82,11 +82,11 @@ export default function TotalCostScreen() {
         shipmentDetails.weight = Number(shipmentDetails.weight);
     }, [shipmentBaseCost, additionalChargeFee, discountFee, setCost]);
 
-    useEffect(() => {
+    const handleStartAgain = () => {
+        navigator.navigate("Home");
         if (!isPosted) {
             postShipment(shipmentDetails, senderDetails, receiverDetails)
                 .then((posted) => {
-                    // Clear the shipment details after successful submission
                     setShipmentDetails({
                         weight: "",
                         method: "",
@@ -98,14 +98,9 @@ export default function TotalCostScreen() {
                     setIsPosted(true);
                 })
                 .catch((error) => {
-                    // Handle error if the request fails
                     console.log(error);
                 });
         }
-    }, [shipmentDetails, senderDetails, receiverDetails, isPosted]);
-
-    const handleStartAgain = () => {
-        navigator.navigate("Home");
     };
     return (
         <SafeAreaView style={styles.screenContent}>
@@ -278,7 +273,7 @@ export default function TotalCostScreen() {
 const styles = StyleSheet.create({
     screenContent: {
         paddingHorizontal: 25,
-        flex: 1, // Make it take up the full screen space
+        flex: 1,
         backgroundColor: "#FAEBD7",
     },
     mainText: {
@@ -287,8 +282,8 @@ const styles = StyleSheet.create({
         marginVertical: 20,
     },
     inputRow: {
-        flexDirection: "row", // Arrange the TextInputs in a row
-        justifyContent: "space-between", // Add space between the TextInputs
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     inputRowText: {
         backgroundColor: "#E5D9CA",
@@ -296,10 +291,10 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 30,
         marginBottom: 10,
-        flex: 1, // Make TextInput take up the full available width
+        flex: 1,
     },
     inputHalf: {
-        marginRight: 10, // Add some space between the TextInputs
+        marginRight: 10,
     },
     shippingCostFees: {
         backgroundColor: "#E5D9CA",

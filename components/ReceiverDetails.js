@@ -56,12 +56,10 @@ export default function ReceiverDetails() {
 
 const styles = StyleSheet.create({
     inputRowText: {
-        marginVertical: 20,
         backgroundColor: "#E5D9CA",
         borderRadius: 5,
         paddingHorizontal: 20,
         paddingVertical: 30,
-        marginBottom: 15,
         flex: 1,
     },
     receiverTitle: {
