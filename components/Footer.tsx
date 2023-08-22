@@ -1,9 +1,10 @@
+import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function Footer() {
+const Footer: React.FC = () => {
     return (
         <View style={styles.footer}>
             <TouchableOpacity>
@@ -46,3 +47,5 @@ const styles = StyleSheet.create({
         marginHorizontal: 45,
     },
 });
+
+export default Footer;

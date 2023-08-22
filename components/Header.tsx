@@ -1,7 +1,7 @@
+import React from 'react';
 import { SafeAreaView, StyleSheet, Text, Image } from "react-native";
-import React from "react";
 
-export default function Header() {
+const Header: React.FC = () => {
     return (
         <SafeAreaView style={styles.header}>
             <Text style={styles.headerText}>
@@ -39,3 +39,5 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
 });
+
+export default Header;

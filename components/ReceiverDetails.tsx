@@ -3,13 +3,24 @@ import React, { useContext } from "react";
 import ShipmentContext from "../context/ShipmentContext";
 import ReceiverContext from "../context/ReceiverContext";
 
-export default function ReceiverDetails() {
-    const { pressedImage } = useContext(ShipmentContext);
-    const { receiverDetails } = useContext(ReceiverContext);
+const ReceiverDetails: React.FC = () => {
+
+    const contextReceiver = useContext(ReceiverContext);
+    if (!contextReceiver) {
+        throw new Error("Must be used within a ReceiverProvider");
+    }
+    const { receiverDetails } = contextReceiver;
+
+    const contextShipment = useContext(ShipmentContext);
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
+    const { pressedImage } = contextShipment;
+
     return (
         <View style={styles.inputRowText}>
             {pressedImage === "Standard UK&I" && (
-                <View style={styles.receiverContainer}>
+                <View>
                     <Text style={styles.receiverTitle}>Receiver</Text>
                     <Text
                         style={styles.receiverDescription}
@@ -23,7 +34,7 @@ export default function ReceiverDetails() {
                 </View>
             )}
             {pressedImage === "International" && (
-                <View style={styles.receiverContainer}>
+                <View>
                     <Text style={styles.receiverTitle}>Receiver</Text>
                     <Text
                         style={styles.receiverDescription}
@@ -37,7 +48,7 @@ export default function ReceiverDetails() {
                 </View>
             )}
             {pressedImage === "Intergalactic" && (
-                <View style={styles.receiverContainer}>
+                <View>
                     <Text style={styles.receiverTitle}>Receiver</Text>
                     <Text
                         style={styles.receiverDescription}
@@ -70,3 +81,5 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
 });
+
+export default ReceiverDetails

@@ -3,13 +3,23 @@ import React, { useContext } from "react";
 import ShipmentContext from "../context/ShipmentContext";
 import SenderContext from "../context/SenderContext";
 
-export default function SenderDetails() {
-    const { pressedImage } = useContext(ShipmentContext);
-    const { senderDetails } = useContext(SenderContext);
+const SenderDetails: React.FC = () => {
+    const contextSender = useContext(SenderContext);
+    if (!contextSender) {
+        throw new Error("Must be used within a SenderProvider");
+    }
+    const { senderDetails } = contextSender;
+
+    const contextShipment = useContext(ShipmentContext);
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
+    const { pressedImage } = contextShipment;
+
     return (
         <View style={styles.inputRowText}>
             {pressedImage === "Standard UK&I" && (
-                <View style={styles.senderContainer}>
+                <View>
                     <Text style={styles.senderTitle}>Sender</Text>
                     <Text
                         style={styles.senderDescription}
@@ -23,7 +33,7 @@ export default function SenderDetails() {
                 </View>
             )}
             {pressedImage === "International" && (
-                <View style={styles.senderContainer}>
+                <View>
                     <Text style={styles.senderTitle}>Sender</Text>
                     <Text
                         style={styles.senderDescription}
@@ -37,7 +47,7 @@ export default function SenderDetails() {
                 </View>
             )}
             {pressedImage === "Intergalactic" && (
-                <View style={styles.senderContainer}>
+                <View>
                     <Text style={styles.senderTitle}>Sender</Text>
                     <Text
                         style={styles.senderDescription}
@@ -72,3 +82,5 @@ const styles = StyleSheet.create({
         fontSize: 10,
     },
 });
+
+export default SenderDetails

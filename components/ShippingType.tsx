@@ -5,8 +5,13 @@ import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import ShipmentContext from "../context/ShipmentContext";
 
-export default function ShippingType() {
-    const { pressedImage } = useContext(ShipmentContext);
+const ShippingType: React.FC = () => {
+    const contextShipment = useContext(ShipmentContext)
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider") 
+    }
+    const {pressedImage} = contextShipment
+
     return (
         <View style={[styles.inputRowText, styles.inputHalf, styles.icon]}>
             {pressedImage === "Standard UK&I" && (
@@ -61,3 +66,5 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
 });
+
+export default ShippingType

@@ -1,21 +1,26 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import React, { useContext } from "react";
-import SenderContext from "../context/SenderContext";
+import ReceiverContext from "../context/ReceiverContext";
 
-export default function HomeScreenSenderDetails() {
-    const { senderDetails, setSenderDetails } = useContext(SenderContext);
+const ReceiptScreenReceiverDetails: React.FC = () => {
+
+    const contextReceiver = useContext(ReceiverContext);
+    if (!contextReceiver) {
+        throw new Error("Must be used within a ReceiverProvider");
+    }
+    const { receiverDetails, setReceiverDetails } = contextReceiver;
 
     return (
         <View>
-            <Text style={styles.innerText}>Sender Details</Text>
+            <Text style={styles.innerText}>Recipient Details</Text>
             <View style={styles.inputRow}>
                 <TextInput
                     placeholder="First Name"
                     style={[styles.inputRowText, styles.inputHalf]}
-                    value={senderDetails.first_name}
+                    value={receiverDetails.first_name}
                     onChangeText={(text) => {
-                        setSenderDetails({
-                            ...senderDetails,
+                        setReceiverDetails({
+                            ...receiverDetails,
                             first_name: text,
                         });
                     }}
@@ -23,10 +28,10 @@ export default function HomeScreenSenderDetails() {
                 <TextInput
                     placeholder="Last Name"
                     style={styles.inputRowText}
-                    value={senderDetails.last_name}
+                    value={receiverDetails.last_name}
                     onChangeText={(text) => {
-                        setSenderDetails({
-                            ...senderDetails,
+                        setReceiverDetails({
+                            ...receiverDetails,
                             last_name: text,
                         });
                     }}
@@ -35,23 +40,23 @@ export default function HomeScreenSenderDetails() {
             <TextInput
                 placeholder="Email"
                 style={styles.inputText}
-                value={senderDetails.email_address}
+                value={receiverDetails.email_address}
                 onChangeText={(text) => {
-                    setSenderDetails({
-                        ...senderDetails,
+                    setReceiverDetails({
+                        ...receiverDetails,
                         email_address: text,
                     });
                 }}
             ></TextInput>
-            <Text style={styles.innerText}>Sender Address</Text>
+            <Text style={styles.innerText}>Receiver Address</Text>
             <View style={styles.inputRow}>
                 <TextInput
                     placeholder="Address Line 1"
                     style={[styles.inputRowText, styles.inputHalf]}
-                    value={senderDetails.address_line_1}
+                    value={receiverDetails.address_line_1}
                     onChangeText={(text) => {
-                        setSenderDetails({
-                            ...senderDetails,
+                        setReceiverDetails({
+                            ...receiverDetails,
                             address_line_1: text,
                         });
                     }}
@@ -59,10 +64,10 @@ export default function HomeScreenSenderDetails() {
                 <TextInput
                     placeholder="Address Line 2"
                     style={styles.inputRowText}
-                    value={senderDetails.address_line_2}
+                    value={receiverDetails.address_line_2}
                     onChangeText={(text) => {
-                        setSenderDetails({
-                            ...senderDetails,
+                        setReceiverDetails({
+                            ...receiverDetails,
                             address_line_2: text,
                         });
                     }}
@@ -72,18 +77,18 @@ export default function HomeScreenSenderDetails() {
                 <TextInput
                     placeholder="City"
                     style={[styles.inputRowText, styles.inputHalf]}
-                    value={senderDetails.city}
+                    value={receiverDetails.city}
                     onChangeText={(text) => {
-                        setSenderDetails({ ...senderDetails, city: text });
+                        setReceiverDetails({ ...receiverDetails, city: text });
                     }}
                 ></TextInput>
                 <TextInput
                     placeholder="Country"
                     style={styles.inputRowText}
-                    value={senderDetails.country}
+                    value={receiverDetails.country}
                     onChangeText={(text) => {
-                        setSenderDetails({
-                            ...senderDetails,
+                        setReceiverDetails({
+                            ...receiverDetails,
                             country: text,
                         });
                     }}
@@ -93,10 +98,10 @@ export default function HomeScreenSenderDetails() {
                 <TextInput
                     placeholder="Post code"
                     style={styles.inputTextHalfAlone}
-                    value={senderDetails.post_code}
+                    value={receiverDetails.post_code}
                     onChangeText={(text) => {
-                        setSenderDetails({
-                            ...senderDetails,
+                        setReceiverDetails({
+                            ...receiverDetails,
                             post_code: text,
                         });
                     }}
@@ -139,3 +144,5 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
 });
+
+export default ReceiptScreenReceiverDetails

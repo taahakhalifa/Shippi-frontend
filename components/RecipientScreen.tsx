@@ -15,11 +15,24 @@ import SenderDetails from "./SenderDetails";
 import ShipmentContext from "../context/ShipmentContext";
 import ReceiptScreenReceiverDetails from "./ReceiptScreenReceiverDetails";
 import ReceiverContext from "../context/ReceiverContext";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
 
-export default function RecipientScreen() {
-    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
-    const { receiverDetails } = useContext(ReceiverContext);
-    const navigation = useNavigation();
+const RecipientScreen: React.FC = () => {
+
+    const contextReceiver = useContext(ReceiverContext);
+    if (!contextReceiver) {
+        throw new Error("Must be used within a ReceiverProvider");
+    }
+    const { receiverDetails } = contextReceiver;
+
+    const contextShipment = useContext(ShipmentContext);
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
+    const { shipmentDetails, setShipmentDetails} = contextShipment;
+
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
     const handlePress = () => {
         navigation.navigate("Shipment Cost");
         setShipmentDetails({
@@ -40,7 +53,7 @@ export default function RecipientScreen() {
                 <View style={[styles.inputRowTextSingle, styles.icon]}>
                     <Text style={styles.kgBigText}>KG</Text>
                     <Text
-                        style={styles.weightText}
+                        
                     >{`${shipmentDetails.weight}`}</Text>
                 </View>
                 <Text style={styles.mainText}>Enter recipient details...</Text>
@@ -148,3 +161,5 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 });
+
+export default RecipientScreen

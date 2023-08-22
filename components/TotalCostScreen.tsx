@@ -8,28 +8,53 @@ import {
     ScrollView,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import ReceiverContext from "../context/ReceiverContext";
 import ShipmentContext from "../context/ShipmentContext";
 import SenderContext from "../context/SenderContext";
 import { getRates, postShipment } from "../utils/api";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
 
-export default function TotalCostScreen() {
-    const navigator = useNavigation();
-    const { receiverDetails } = useContext(ReceiverContext);
+interface IRate {
+    type: string;
+    minweight: number;
+    maxweight: number;
+    basecost: number;
+}
+
+const TotalCostScreen: React.FC = () => {
+    const navigator = useNavigation<NavigationProp<RootStackParamList>>();
+
+    const contextReceiver = useContext(ReceiverContext);
+    if (!contextReceiver) {
+        throw new Error("Must be used within a ReceiverProvider");
+    }
+    const { receiverDetails } = contextReceiver;
+
+    const contextShipment = useContext(ShipmentContext);
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
     const {
         shipmentDetails,
         setShipmentDetails,
         pressedImage,
         shippingRates,
         setShippingRates,
-        cost,
         setCost,
-    } = useContext(ShipmentContext);
-    const { senderDetails } = useContext(SenderContext);
+    } = contextShipment;
+
+    const contextSender = useContext(SenderContext);
+    if (!contextSender) {
+        throw new Error("Must be used within a SenderProvider");
+    }
+    const { senderDetails } = contextSender;
+
     const [totalAmount, setTotalAmount] = useState(0);
     const [isPosted, setIsPosted] = useState(false);
 
@@ -39,7 +64,7 @@ export default function TotalCostScreen() {
         });
     }, [setShippingRates]);
 
-    const getShipmentBaseCost = () => {
+    const getShipmentBaseCost = (): number => {
         const { weight } = shipmentDetails;
         const selectedType = pressedImage;
 
@@ -50,7 +75,7 @@ export default function TotalCostScreen() {
                 weight <= rate.maxweight
         );
 
-        return matchingRate ? Number(matchingRate.basecost).toFixed(2) : 0;
+        return matchingRate ? Number(matchingRate.basecost) : 0;
     };
     const shipmentBaseCost = getShipmentBaseCost();
 
@@ -73,11 +98,18 @@ export default function TotalCostScreen() {
     const discountFee = discountCharges();
 
     useEffect(() => {
-        const totalAmount = Number(
-            shipmentBaseCost + additionalChargeFee - discountFee
+        const shipmentBaseCostNumber = Number(shipmentBaseCost);
+        const additionalChargeFeeNumber = Number(additionalChargeFee);
+        const discountFeeNumber = Number(discountFee);
+
+        const totalAmount = (
+            shipmentBaseCostNumber +
+            additionalChargeFeeNumber -
+            discountFeeNumber
         ).toFixed(2);
+
         setCost(totalAmount);
-        setTotalAmount(totalAmount);
+        setTotalAmount(Number(totalAmount));
         shipmentDetails.cost = Number(totalAmount);
         shipmentDetails.weight = Number(shipmentDetails.weight);
     }, [shipmentBaseCost, additionalChargeFee, discountFee, setCost]);
@@ -88,12 +120,12 @@ export default function TotalCostScreen() {
             postShipment(shipmentDetails, senderDetails, receiverDetails)
                 .then((posted) => {
                     setShipmentDetails({
-                        weight: "",
+                        weight: 0,
                         method: "",
                         sender_details: "",
                         receipt_details: "",
                         shipment_date: "",
-                        cost: "",
+                        cost: 0,
                     });
                     setIsPosted(true);
                 })
@@ -102,6 +134,7 @@ export default function TotalCostScreen() {
                 });
         }
     };
+
     return (
         <SafeAreaView style={styles.screenContent}>
             <Text style={styles.mainText}>Your updating shipping label...</Text>
@@ -138,7 +171,7 @@ export default function TotalCostScreen() {
                 </View>
                 <View style={styles.inputRowText}>
                     {pressedImage === "Standard UK&I" && (
-                        <View style={styles.senderContainer}>
+                        <View>
                             <Text style={styles.senderTitle}>Sender</Text>
                             <Text
                                 style={styles.senderDescription}
@@ -152,7 +185,7 @@ export default function TotalCostScreen() {
                         </View>
                     )}
                     {pressedImage === "International" && (
-                        <View style={styles.senderContainer}>
+                        <View>
                             <Text style={styles.senderTitle}>Sender</Text>
                             <Text
                                 style={styles.senderDescription}
@@ -166,7 +199,7 @@ export default function TotalCostScreen() {
                         </View>
                     )}
                     {pressedImage === "Intergalactic" && (
-                        <View style={styles.senderContainer}>
+                        <View>
                             <Text style={styles.senderTitle}>Sender</Text>
                             <Text
                                 style={styles.senderDescription}
@@ -186,13 +219,11 @@ export default function TotalCostScreen() {
                     style={[styles.inputRowText, styles.inputHalf, styles.icon]}
                 >
                     <Text style={styles.kgBigText}>KG</Text>
-                    <Text style={styles.weightText}>{`${Number(
-                        shipmentDetails.weight
-                    )}`}</Text>
+                    <Text>{`${Number(shipmentDetails.weight)}`}</Text>
                 </View>
                 <View style={styles.inputRowText}>
                     {pressedImage === "Standard UK&I" && (
-                        <View style={styles.receiverContainer}>
+                        <View>
                             <Text style={styles.receiverTitle}>Receiver</Text>
                             <Text
                                 style={styles.receiverDescription}
@@ -206,7 +237,7 @@ export default function TotalCostScreen() {
                         </View>
                     )}
                     {pressedImage === "International" && (
-                        <View style={styles.receiverContainer}>
+                        <View>
                             <Text style={styles.receiverTitle}>Receiver</Text>
                             <Text
                                 style={styles.receiverDescription}
@@ -220,7 +251,7 @@ export default function TotalCostScreen() {
                         </View>
                     )}
                     {pressedImage === "Intergalactic" && (
-                        <View style={styles.receiverContainer}>
+                        <View>
                             <Text style={styles.receiverTitle}>Receiver</Text>
                             <Text
                                 style={styles.receiverDescription}
@@ -268,7 +299,7 @@ export default function TotalCostScreen() {
             </TouchableOpacity>
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     screenContent: {
@@ -369,3 +400,5 @@ const styles = StyleSheet.create({
         marginRight: 105,
     },
 });
+
+export default TotalCostScreen;

@@ -1,18 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Platform } from "react-native";
 import React, { useState, useContext } from "react";
 import ShipmentContext from "../context/ShipmentContext";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import DateTimePicker, {
+    DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 
 export default function DatePicker() {
-    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
+    const context = useContext(ShipmentContext);
+    if (!context) {
+        throw new Error("DatePicker must be used within a ShipmentProvider");
+    }
+    const { shipmentDetails, setShipmentDetails } = context;
 
-    const [date, setDate] = useState(new Date());
-    const [mode, setMode] = useState("date");
-    const [show, setShow] = useState(false);
-    const [text, setText] = useState("empty");
-    const [isDob, setIsDob] = useState(false);
+    const [date, setDate] = useState<Date>(new Date());
+    const [mode, setMode] = useState<"date" | "time">("date");
+    const [show, setShow] = useState<boolean>(false);
+    const [text, setText] = useState<string>("empty");
+    const [isDob, setIsDob] = useState<boolean>(false);
 
-    const onChange = (event, selectedDate) => {
+    const onChange = (event: DateTimePickerEvent, selectedDate?: Date) => {
         const currentDate = selectedDate || date;
         setShow(Platform.OS === "ios");
         setDate(currentDate);
@@ -36,10 +42,11 @@ export default function DatePicker() {
         });
     };
 
-    const showMode = (currentMode) => {
+    const showMode = (currentMode: "date" | "time") => {
         setShow(true);
         setMode(currentMode);
     };
+
     return (
         <View style={styles.datePickerContainer}>
             <DateTimePicker

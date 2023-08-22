@@ -13,10 +13,18 @@ import ShippingType from "./ShippingType";
 import SenderDetails from "./SenderDetails";
 import DatePicker from "./DatePicker";
 import ShipmentContext from "../context/ShipmentContext";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App"
 
 export default function DefinePackage() {
-    const navigation = useNavigation();
-    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+    const context = useContext(ShipmentContext);
+    if (!context) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
+    const { shipmentDetails, setShipmentDetails } = context;
+
     return (
         <SafeAreaView style={styles.screenContent}>
             <Text style={styles.mainText}>Your updating shipping label...</Text>
@@ -30,11 +38,11 @@ export default function DefinePackage() {
                 <TextInput
                     placeholder="e.g. 100"
                     style={styles.inputWeightText}
-                    value={shipmentDetails.weight}
+                    value={shipmentDetails.weight.toString()}
                     onChangeText={(text) => {
                         setShipmentDetails({
                             ...shipmentDetails,
-                            weight: text,
+                            weight: Number(text),
                         });
                     }}
                 ></TextInput>

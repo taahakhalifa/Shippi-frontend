@@ -9,13 +9,18 @@ import {
 import React, { useContext } from "react";
 import ShipmentContext from "../context/ShipmentContext";
 
-export default function HomeScreenImages() {
+const HomeScreenImages: React.FC = () => {
+    const contextShipment = useContext(ShipmentContext);
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
     const {
         pressedImage,
         setPressedImage,
         shipmentDetails,
         setShipmentDetails,
-    } = useContext(ShipmentContext);
+    } = contextShipment;
+
     const handleImagePress = (image) => {
         setPressedImage(image);
         setShipmentDetails({
@@ -92,7 +97,7 @@ export default function HomeScreenImages() {
             </ScrollView>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     imageContent: {
@@ -127,3 +132,5 @@ const styles = StyleSheet.create({
         opacity: 0.3,
     },
 });
+
+export default HomeScreenImages;

@@ -1,25 +1,36 @@
+import React, { useContext } from "react";
 import {
     SafeAreaView,
     StyleSheet,
     Text,
-    ImageBackground,
     ScrollView,
-    TextInput,
-    View,
     TouchableOpacity,
+    View,
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
-import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
 import HomeScreenImages from "./HomeScreenImages";
 import HomeScreenSenderDetails from "./HomeScreenSenderDetails";
 import ShipmentContext from "../context/ShipmentContext";
 import SenderContext from "../context/SenderContext";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
 
-export default function HomeScreen() {
-    const navigation = useNavigation();
-    const { shipmentDetails, setShipmentDetails } = useContext(ShipmentContext);
-    const { senderDetails } = useContext(SenderContext);
+const HomeScreen: React.FC = () => {
+    const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
+    const contextShipment = useContext(ShipmentContext)
+    if (!contextShipment) {
+        throw new Error ("Must be used within a ShipmentProvider")
+    }
+    const {shipmentDetails, setShipmentDetails} = contextShipment
+
+    const contextSender = useContext(SenderContext)
+    if (!contextSender) {
+        throw new Error ("Must be used within a SenderProvider")
+    }
+    const {senderDetails} = contextSender
+
     const handlePress = () => {
         navigation.navigate("Shipping Label");
         setShipmentDetails({
@@ -49,7 +60,7 @@ export default function HomeScreen() {
             </ScrollView>
         </SafeAreaView>
     );
-}
+};
 
 const styles = StyleSheet.create({
     homeContent: {
@@ -80,3 +91,5 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
 });
+
+export default HomeScreen;

@@ -1,3 +1,4 @@
+import React from "react"; // Include React import for TypeScript
 import { StyleSheet, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,9 +13,20 @@ import { ShipmentProvider } from "./context/ShipmentContext";
 import { SenderProvider } from "./context/SenderContext";
 import { ReceiverProvider } from "./context/ReceiverContext";
 
-const Stack = createStackNavigator();
+// Define the type for the navigation parameters
+export type RootStackParamList = {
+    Home: undefined;
+    "Shipping Label": undefined;
+    "Recipient Screen": undefined;
+    "Shipment Cost": undefined;
+    "Total Cost Screen": undefined;
+};
 
-export default function App() {
+// Use the type with the stack navigator
+const Stack = createStackNavigator<RootStackParamList>();
+
+const App: React.FC = () => {
+    // Define the component as a Functional Component
     return (
         <ShipmentProvider>
             <SenderProvider>
@@ -56,7 +68,7 @@ export default function App() {
             </SenderProvider>
         </ShipmentProvider>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -65,3 +77,5 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
 });
+
+export default App; // Make sure to export the component

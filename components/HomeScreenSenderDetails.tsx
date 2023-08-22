@@ -1,21 +1,25 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import React, { useContext } from "react";
-import ReceiverContext from "../context/ReceiverContext";
+import SenderContext from "../context/SenderContext";
 
-export default function ReceiptScreenReceiverDetails() {
-    const { receiverDetails, setReceiverDetails } = useContext(ReceiverContext);
+const HomeScreenSenderDetails: React.FC = () => {
+    const contextSender = useContext(SenderContext);
+    if (!contextSender) {
+        throw new Error("Must be used within a SenderProvider");
+    }
+    const { senderDetails, setSenderDetails } = contextSender;
 
     return (
         <View>
-            <Text style={styles.innerText}>Recipient Details</Text>
+            <Text style={styles.innerText}>Sender Details</Text>
             <View style={styles.inputRow}>
                 <TextInput
                     placeholder="First Name"
                     style={[styles.inputRowText, styles.inputHalf]}
-                    value={receiverDetails.first_name}
+                    value={senderDetails.first_name}
                     onChangeText={(text) => {
-                        setReceiverDetails({
-                            ...receiverDetails,
+                        setSenderDetails({
+                            ...senderDetails,
                             first_name: text,
                         });
                     }}
@@ -23,10 +27,10 @@ export default function ReceiptScreenReceiverDetails() {
                 <TextInput
                     placeholder="Last Name"
                     style={styles.inputRowText}
-                    value={receiverDetails.last_name}
+                    value={senderDetails.last_name}
                     onChangeText={(text) => {
-                        setReceiverDetails({
-                            ...receiverDetails,
+                        setSenderDetails({
+                            ...senderDetails,
                             last_name: text,
                         });
                     }}
@@ -35,23 +39,23 @@ export default function ReceiptScreenReceiverDetails() {
             <TextInput
                 placeholder="Email"
                 style={styles.inputText}
-                value={receiverDetails.email_address}
+                value={senderDetails.email_address}
                 onChangeText={(text) => {
-                    setReceiverDetails({
-                        ...receiverDetails,
+                    setSenderDetails({
+                        ...senderDetails,
                         email_address: text,
                     });
                 }}
             ></TextInput>
-            <Text style={styles.innerText}>Receiver Address</Text>
+            <Text style={styles.innerText}>Sender Address</Text>
             <View style={styles.inputRow}>
                 <TextInput
                     placeholder="Address Line 1"
                     style={[styles.inputRowText, styles.inputHalf]}
-                    value={receiverDetails.address_line_1}
+                    value={senderDetails.address_line_1}
                     onChangeText={(text) => {
-                        setReceiverDetails({
-                            ...receiverDetails,
+                        setSenderDetails({
+                            ...senderDetails,
                             address_line_1: text,
                         });
                     }}
@@ -59,10 +63,10 @@ export default function ReceiptScreenReceiverDetails() {
                 <TextInput
                     placeholder="Address Line 2"
                     style={styles.inputRowText}
-                    value={receiverDetails.address_line_2}
+                    value={senderDetails.address_line_2}
                     onChangeText={(text) => {
-                        setReceiverDetails({
-                            ...receiverDetails,
+                        setSenderDetails({
+                            ...senderDetails,
                             address_line_2: text,
                         });
                     }}
@@ -72,18 +76,18 @@ export default function ReceiptScreenReceiverDetails() {
                 <TextInput
                     placeholder="City"
                     style={[styles.inputRowText, styles.inputHalf]}
-                    value={receiverDetails.city}
+                    value={senderDetails.city}
                     onChangeText={(text) => {
-                        setReceiverDetails({ ...receiverDetails, city: text });
+                        setSenderDetails({ ...senderDetails, city: text });
                     }}
                 ></TextInput>
                 <TextInput
                     placeholder="Country"
                     style={styles.inputRowText}
-                    value={receiverDetails.country}
+                    value={senderDetails.country}
                     onChangeText={(text) => {
-                        setReceiverDetails({
-                            ...receiverDetails,
+                        setSenderDetails({
+                            ...senderDetails,
                             country: text,
                         });
                     }}
@@ -93,10 +97,10 @@ export default function ReceiptScreenReceiverDetails() {
                 <TextInput
                     placeholder="Post code"
                     style={styles.inputTextHalfAlone}
-                    value={receiverDetails.post_code}
+                    value={senderDetails.post_code}
                     onChangeText={(text) => {
-                        setReceiverDetails({
-                            ...receiverDetails,
+                        setSenderDetails({
+                            ...senderDetails,
                             post_code: text,
                         });
                     }}
@@ -104,7 +108,7 @@ export default function ReceiptScreenReceiverDetails() {
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     innerText: {
@@ -139,3 +143,5 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
 });
+
+export default HomeScreenSenderDetails;

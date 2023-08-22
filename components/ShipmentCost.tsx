@@ -14,10 +14,17 @@ import SenderDetails from "./SenderDetails";
 import ShipmentContext from "../context/ShipmentContext";
 import ReceiverDetails from "./ReceiverDetails";
 import { useNavigation } from "@react-navigation/native";
+import { NavigationProp } from "@react-navigation/native";
+import { RootStackParamList } from "../App";
 
-export default function ShipmentCost() {
-    const navigator = useNavigation();
-    const { shipmentDetails } = useContext(ShipmentContext);
+const ShipmentCost: React.FC = () => {
+    const contextShipment = useContext(ShipmentContext);
+    if (!contextShipment) {
+        throw new Error("Must be used within a ShipmentProvider");
+    }
+    const { shipmentDetails } = contextShipment;
+
+    const navigator = useNavigation<NavigationProp<RootStackParamList>>();
     return (
         <SafeAreaView style={styles.screenContent}>
             <ScrollView>
@@ -38,7 +45,6 @@ export default function ShipmentCost() {
                     >
                         <Text style={styles.kgBigText}>KG</Text>
                         <Text
-                            style={styles.weightText}
                         >{`${shipmentDetails.weight}`}</Text>
                     </View>
                     <ReceiverDetails />
@@ -140,3 +146,5 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
 });
+
+export default ShipmentCost
