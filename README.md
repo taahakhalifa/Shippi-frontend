@@ -4,7 +4,7 @@
 
 ## Introduction
 
-Welcome to the Shippi mobile application, a vital segment of my full-stack software developer technical test! This React Native application beautifully complements its robust back-end counterpart and aims to redefine the way users access and interact with shipment data.
+Welcome to the Shippi mobile application! This React Native application beautifully complements its robust back-end counterpart and aims to redefine the way users access and interact with shipment data.
 
 This application provides comprehensive functionality, with a seamless user interface that supports various operations on shipment data. Optimized for iPhone ONLY, the application leverages the power of conditional rendering.
 
